@@ -1,9 +1,8 @@
 // src/app.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserController } from './controllers/user.controller';
-import { UserService } from './services/user.service';
-import { UserRepository } from './repositories/user.repository';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -16,10 +15,10 @@ import { UserRepository } from './repositories/user.repository';
       database: 'lviour_test',
       autoLoadEntities: true,
       synchronize: true,
+      entities: ['dist/**/*.entity{.ts,.js}'],
     }),
-    TypeOrmModule.forFeature([UserRepository]),
+    AuthModule,
+    UsersModule,
   ],
-  controllers: [UserController],
-  providers: [UserService],
 })
 export class AppModule {}
